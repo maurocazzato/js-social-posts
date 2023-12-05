@@ -62,10 +62,10 @@ const post = [
     }
 ];
 
-// Ottieni il contenitore dove aggiungerai i div
+// contenitore dove aggiungere il div
 const container = document.getElementById('container');
 
-// Funzione per creare un elemento div con header, text, media e footer utilizzando template literals
+//creo una finzione con la astruttura del post già creata in precedenza aggiungento elementi array
 function createPostDiv(post) {
     return `
     <div class="post">
@@ -101,7 +101,45 @@ function createPostDiv(post) {
       
 };
 
-// Creazione dei div per ogni sezione dell'array e aggiunta al contenitore
+// aggiungo i div al container
 post.forEach(post => {
     container.innerHTML += createPostDiv(post);
 });
+
+
+
+// Funzione per aggiungere like al counter del post
+function likePost(postId) {
+    // seleziono il pulsante
+    const likeCounter = document.getElementById(`like-counter-${postId}`);
+
+    // faccio si che aumeti di uno
+    likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
+}
+
+// Aggiungo evento per il pulsante
+document.querySelectorAll('.js-like-button').forEach(likeButton => {
+    likeButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        
+        // Ottieni l'ID del post dal data attributo
+        const postId = this.dataset.postid;
+
+        // richiamo la funzione
+        likePost(postId);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
