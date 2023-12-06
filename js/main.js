@@ -110,7 +110,7 @@ post.forEach(post => {
 });
 
 
-// Aggiungo l'evento di clicco per ogni pulsante "Mi Piace"
+// Aggiungo l'evento di click per ogni pulsante "Mi Piace"
 document.querySelectorAll('.js-like-button').forEach(likeButton => {
     likeButton.addEventListener('click', function (event) {
         event.preventDefault();
@@ -129,6 +129,7 @@ document.querySelectorAll('.js-like-button').forEach(likeButton => {
 
             // Cambio il colore del pulsante a verde
             this.classList.add('like-button--liked');
+            // se il post non è già stato "liked"
         } else {
             //  rimuovo l'ID dal array
             likedPosts = likedPosts.filter(id => id !== postId);
