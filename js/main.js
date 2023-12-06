@@ -65,6 +65,9 @@ const post = [
 // contenitore dove aggiungere il div
 const container = document.getElementById('container');
 
+// Array per tenere traccia degli ID dei post che sono stati "liked"
+let likedPosts = [];
+
 //creo una finzione con la astruttura del post già creata in precedenza aggiungento elementi array
 function createPostDiv(post) {
     return `
@@ -76,7 +79,7 @@ function createPostDiv(post) {
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${post.author.name}</div>
-                        <div class="post-meta__time">${post.author.created}</div>
+                        <div class="post-meta__time">${post.created}</div>
                     </div>                    
                 </div>
             </div>
@@ -107,26 +110,33 @@ post.forEach(post => {
 });
 
 
-
-// Funzione per aggiungere like al counter del post
-function likePost(postId) {
-    // seleziono il pulsante
-    const likeCounter = document.getElementById(`like-counter-${postId}`);
-
-    // faccio si che aumeti di uno
-    likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
-}
-
-// Aggiungo evento per il pulsante
+// Aggiungo l'evento di clicco per ogni pulsante "Mi Piace"
 document.querySelectorAll('.js-like-button').forEach(likeButton => {
     likeButton.addEventListener('click', function (event) {
         event.preventDefault();
-        
-        // Ottieni l'ID del post dal data attributo
-        const postId = this.dataset.postid;
 
-        // richiamo la funzione
-        likePost(postId);
+        // Trovo l'ID del post associato al pulsante
+        const postId = this.getAttribute('data-postid');
+
+        // Verifico se il post è già stato "liked"
+        if (!likedPosts.includes(postId)) {
+            // Aggiungo l'ID del post all'array
+            likedPosts.push(postId);
+
+            // Trovo il counter e lo incremento
+            const likeCounter = document.getElementById(`like-counter-${postId}`);
+            likeCounter.textContent = parseInt(likeCounter.textContent) + 1;
+
+            // Cambio il colore del pulsante a verde
+            this.classList.add('like-button--liked');
+        } else {
+            //  rimuovo l'ID dal array
+            likedPosts = likedPosts.filter(id => id !== postId);
+
+        }
+
+        // array likedPosts
+        console.log('Liked Posts:', likedPosts);
     });
 });
 
